@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Popeens Youtube->Emby File Generator</title>
+		<title>Youtube->Emby File Generator</title>
 		<style>
 			body{
 				background: #eee;
@@ -27,8 +27,8 @@
 		<iframe name="log" src="download.php" class="terminal" style="width:700px; height:250px;"></iframe><br/>
 		<span class="os">
 			Open Source under the 
-			<a href="https://github.com/popeen/Youtube--Emby-generator/blob/master/LICENSE">MIT License</a>. 
-			Get it at <a href="https://github.com/popeen/Youtube--Emby-generator">GitHub</a>
+			<a href="https://github.com/Kakadua/Youtube-Emby-generator/blob/master/LICENSE">MIT License</a>. 
+			Get it at <a href="https://github.com/Kakadua/Youtube-Emby-generator">GitHub</a>
 		</span>
 	</body>
 </html>
