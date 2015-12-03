@@ -153,8 +153,9 @@
 			
 		}//end foreach videos
 		
+		echo 'Zipping it up';
 		zip_folder('files/'.$username, 'zip/'.$username.'.zip');
-		echo '
+		echo 'Redirect to download...
 				<script>
 					window.location.href="zip/'.$username.'.zip";
 				</script>
