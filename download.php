@@ -54,7 +54,9 @@
 	$badCharacters = array_merge(
         array_map('chr', range(0,31)),
         array("<", ">", ":", '"', "/", "\\", "|", "?", "*"));	
-
+?>
+<html><head><style>body{ color: #0F0; background: #000; }</style></head><body>
+<?php
 		
 	if(isset($_POST['ch'])){
 		
@@ -160,3 +162,4 @@
 		
 	}
 ?>
+</body></html>
