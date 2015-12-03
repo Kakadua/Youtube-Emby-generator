@@ -80,7 +80,7 @@
 		}
 		$videos = array_reverse(array_merge($videos, $json['items']));
 		
-		if($_POST['reset'] == '1'){ delete_dir($username); echo 'Deleted old files on server<br/>'; ob_flush(); flush(); } //Delete old versions before downloading
+		if($_POST['reset'] == '1'){ delete_dir('files/'.$username); echo 'Deleted old files on server<br/>'; ob_flush(); flush(); } //Delete old versions before downloading
 		if(!file_exists('files/'.$username)){ mkdir('files/'.$username, 0777, true);	} //Create folder if it doesn't exist
 		if(!file_exists('zip')){ mkdir('zip', 0777, true); } //Create folder if it doesn't exist
 		
