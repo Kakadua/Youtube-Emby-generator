@@ -67,24 +67,31 @@
 		
 		$user = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername='.$username.'&key='.$API_KEY, false, stream_context_create($arrContextOptions)),true);
 		$json = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId='.$user['items'][0]['contentDetails']['relatedPlaylists']['uploads'].'&key='.$API_KEY.'&maxResults=50', false, stream_context_create($arrContextOptions)),true);
-		$total = $json['pageInfo']['totalResults'];
-		$loaded = 0;
+		$total = $json['pageInfo']['totalResults'].' (estimate)';
+		$loaded = count($json['items']);
 		$videos = array();
+		
+		if($loaded < 50){
+			$total = $loaded;
+		}
 
-
+		echo 'Number of videos: '.$total .'<br/>&nbsp;<br/>'.$scroll;
 		$i=0;
 		//Get all videos from a channel
 		while(isset($json['nextPageToken'])){
 			if($i==0){ echo 'Loading videos... '; }else{ echo 'Loading more videos... '; }
 			echo $scroll;
-			$loaded = $loaded + count($json['items']);
-			echo '( '.$loaded.' / '.$total.' )<br/>'.$scroll;
+			echo '( '.$loaded.' )<br/>'.$scroll;
 			ob_flush(); flush();
 			$videos = array_merge($videos, $json['items']);
 			$json = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId='.$user['items'][0]['contentDetails']['relatedPlaylists']['uploads'].'&key='.$API_KEY.'&maxResults=50&pageToken='.$json['nextPageToken'], false, stream_context_create($arrContextOptions)),true);
+			$loaded = $loaded + count($json['items']);
 			$i++;
 		}
+		
 		$videos = array_reverse(array_merge($videos, $json['items']));
+		
+		echo 'Loaded '.count($videos).' videos in total. Starting generation...<br/>'.$scroll;
 		
 		if($_POST['reset'] == '1'){ delete_dir('files/'.$username); echo 'Deleted old files on server<br/>'.$scroll; ob_flush(); flush(); } //Delete old versions before downloading
 		if(!file_exists('files/'.$username)){ mkdir('files/'.$username, 0777, true);	} //Create folder if it doesn't exist
