@@ -153,7 +153,11 @@
 		
 		echo 'Zipping it up<br/>'.$scroll;
 		zip_folder('files/'.$username, 'zip/'.$username.'.zip');
-		echo 'Redirect to download...<br/>'.$scroll;
+		echo 'Redirect to download...<br/>'.$scroll.'
+				<script>
+					window.location.href="zip/'.$username.'.zip";
+				</script>
+			';
 		
 	}
 ?>
