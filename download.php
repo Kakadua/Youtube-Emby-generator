@@ -54,6 +54,8 @@
 	$badCharacters = array_merge(
         array_map('chr', range(0,31)),
         array("<", ">", ":", '"', "/", "\\", "|", "?", "*"));	
+		
+	$scroll = '<script>window.scrollTo(0,document.documentElement.clientHeight)</script>';
 ?>
 <html><head><style>body{ color: #0F0; background: #000; }</style></head><body>
 <?php
@@ -72,7 +74,7 @@
 		//Get all videos from a channel
 		while(isset($json['nextPageToken'])){
 			if($i==0){ echo 'Loading videos...<br/>'; }else{ echo 'Loading more videos...<br/>'; }
-			echo '<script>window.scrollTo(0,document.documentElement.clientHeight)</script>';
+			echo $scroll;
 			ob_flush(); flush();
 			$videos = array_merge($videos, $json['items']);
 			$json = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId='.$user['items'][0]['contentDetails']['relatedPlaylists']['uploads'].'&key='.$API_KEY.'&maxResults=50&pageToken='.$json['nextPageToken'], false, stream_context_create($arrContextOptions)),true);
@@ -80,7 +82,7 @@
 		}
 		$videos = array_reverse(array_merge($videos, $json['items']));
 		
-		if($_POST['reset'] == '1'){ delete_dir('files/'.$username); echo 'Deleted old files on server<br/>'; ob_flush(); flush(); } //Delete old versions before downloading
+		if($_POST['reset'] == '1'){ delete_dir('files/'.$username); echo 'Deleted old files on server<br/>'.$scroll; ob_flush(); flush(); } //Delete old versions before downloading
 		if(!file_exists('files/'.$username)){ mkdir('files/'.$username, 0777, true);	} //Create folder if it doesn't exist
 		if(!file_exists('zip')){ mkdir('zip', 0777, true); } //Create folder if it doesn't exist
 		
@@ -140,11 +142,7 @@
 			}else{ $print .= 'Skipped: '; }			
 			
 			$print .= '[S'.$year.'E'.$j.'] '.$title.'<br/>';
-			$print .= '
-						<script>
-							window.scrollTo(0,document.documentElement.clientHeight);
-						</script>
-					';
+			$print .= $scroll;
 			
 			echo $print;
 			
@@ -153,13 +151,9 @@
 			
 		}//end foreach videos
 		
-		echo 'Zipping it up<br/>';
+		echo 'Zipping it up<br/>'.$scroll;
 		zip_folder('files/'.$username, 'zip/'.$username.'.zip');
-		echo 'Redirect to download...<br/>
-				<script>
-					window.location.href="zip/'.$username.'.zip";
-				</script>
-			';
+		echo 'Redirect to download...<br/>'.$scroll;
 		
 	}
 ?>
