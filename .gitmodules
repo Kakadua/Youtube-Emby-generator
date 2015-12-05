@@ -1,3 +1,6 @@
 [submodule "PHP-Snippets"]
 	path = PHP-Snippets
 	url = https://github.com/Kakadua/PHP-Snippets
+[submodule "YouTube-Downloader"]
+	path = YouTube-Downloader
+	url = https://github.com/jeckman/YouTube-Downloader
